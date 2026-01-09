@@ -185,6 +185,7 @@
 
 
 import { useState, useEffect } from 'react';
+import { API_BASE } from '../api';
 import EditTeacherModal from './EditTeacherModal';
 
 function TeacherManagement({ onNavigateToAdmin }) {
@@ -197,7 +198,7 @@ function TeacherManagement({ onNavigateToAdmin }) {
   const loadTeachers = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost/backend/api/admin/get_teachers.php');
+      const res = await fetch(`${API_BASE}/admin/get_teachers.php`);
       const data = await res.json();
       if (data.success) {
         setTeachers(data.teachers);
@@ -220,7 +221,7 @@ function TeacherManagement({ onNavigateToAdmin }) {
     if (!confirm('Are you sure you want to delete this teacher?')) return;
 
     try {
-      const res = await fetch('http://localhost/backend/api/admin/delete_teacher.php', {
+      const res = await fetch(`${API_BASE}/admin/delete_teacher.php`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ teacher_id: teacherId })
@@ -242,7 +243,7 @@ function TeacherManagement({ onNavigateToAdmin }) {
   // Handle save edited teacher
   const handleSaveTeacher = async (updatedTeacher) => {
     try {
-      const res = await fetch('http://localhost/backend/api/admin/update_teacher.php', {
+      const res = await fetch(`${API_BASE}/admin/update_teacher.php`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedTeacher)

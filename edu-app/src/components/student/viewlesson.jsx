@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API_BASE, MEDIA_BASE } from '../../api';
 
 function ViewLesson({ user, onBack }) {
   const [studentId, setStudentId] = useState(null);
@@ -27,7 +28,7 @@ function ViewLesson({ user, onBack }) {
 
     const loadQuestions = async (lessonId) => {
   try {
-    const response = await fetch(`http://localhost/backend/api/students/get_lesson_questions.php?lesson_id=${lessonId}&student_id=${studentId}`);
+    const response = await fetch(`${API_BASE}/students/get_lesson_questions.php?lesson_id=${lessonId}&student_id=${studentId}`);
     const data = await response.json();
     if (data.success) {
       setQuestions(data.questions || []);
@@ -44,7 +45,7 @@ const handleAskQuestion = async () => {
   }
 
   try {
-    const response = await fetch('http://localhost/backend/api/students/ask_question.php', {
+    const response = await fetch(`${API_BASE}/students/ask_question.php`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -74,7 +75,7 @@ const handleAskQuestion = async () => {
 
   const getStudentId = async () => {
     try {
-      const response = await fetch(`http://localhost/backend/api/students/get_student_id.php?user_id=${user.id}`);
+      const response = await fetch(`${API_BASE}/students/get_student_id.php?user_id=${user.id}`);
       const data = await response.json();
       
       if (data.success && data.student_id) {
@@ -93,7 +94,7 @@ const handleAskQuestion = async () => {
   const loadLessons = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost/backend/api/students/view_lessons.php?student_id=${studentId}`);
+      const response = await fetch(`${API_BASE}/students/view_lessons.php?student_id=${studentId}`);
       const data = await response.json();
       
       if (data.success) {
@@ -111,7 +112,7 @@ const handleAskQuestion = async () => {
 
   const markAsViewed = async (lessonId) => {
     try {
-      await fetch('http://localhost/backend/api/students/mark_lesson_viewed.php', {
+      await fetch(`${API_BASE}/students/mark_lesson_viewed.php`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -202,7 +203,7 @@ const handleAskQuestion = async () => {
               {selectedLesson.lesson_type === 'video' && selectedLesson.file_path && (
                 <div className="mb-4">
                   <video controls className="w-full max-w-4xl mx-auto rounded-lg shadow-lg">
-                    <source src={`http://localhost/backend/${selectedLesson.file_path}`} type="video/mp4" />
+                    <source src={`${MEDIA_BASE}/${selectedLesson.file_path}`} type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
                 </div>
@@ -211,12 +212,12 @@ const handleAskQuestion = async () => {
               {selectedLesson.lesson_type === 'pdf' && selectedLesson.file_path && (
                 <div className="mb-4">
                   <iframe
-                    src={`http://localhost/backend/${selectedLesson.file_path}`}
+                    src={`${MEDIA_BASE}/${selectedLesson.file_path}`}
                     className="w-full h-[900px] border rounded-lg"
                     title={selectedLesson.title}
                   />
                   <a
-                    href={`http://localhost/backend/${selectedLesson.file_path}`}
+                    href={`${MEDIA_BASE}/${selectedLesson.file_path}`}
                     download
                     target="_blank"
                     rel="noopener noreferrer"
@@ -232,7 +233,7 @@ const handleAskQuestion = async () => {
                   <div className="text-6xl mb-4">📄</div>
                   <p className="text-gray-700 mb-4">Document: {selectedLesson.file_name}</p>
                   <a
-                    href={`http://localhost/backend/${selectedLesson.file_path}`}
+                    href={`${MEDIA_BASE}/${selectedLesson.file_path}`}
                     download
                     target="_blank"
                     rel="noopener noreferrer"

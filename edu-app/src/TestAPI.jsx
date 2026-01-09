@@ -100,6 +100,7 @@
 
 
 import { useState, useEffect } from 'react';
+import { API_BASE } from './api';
 
 function AdminDashboard({ user, onLogout, onBack }) {
   const [view, setView] = useState('teachers');
@@ -136,9 +137,9 @@ get_available_subjects.php
   const loadFormData = async () => {
     try {
       const [subjectsRes, classesRes] = await Promise.all([
-        //fetch('http://localhost/backend/api/common/get_subjects.php'),
-        fetch('http://localhost/backend/api/common/get_available_subjects.php'),
-        fetch('http://localhost/backend/api/common/get_classes.php')
+        //fetch(`${API_BASE}/common/get_subjects.php`),
+        fetch(`${API_BASE}/common/get_available_subjects.php`),
+        fetch(`${API_BASE}/common/get_classes.php`)
       ]);
 
       const subjectsData = await subjectsRes.json();
@@ -178,7 +179,7 @@ get_available_subjects.php
     setLoading(true);
 
     try {
-      const res = await fetch('http://localhost/backend/api/admin/add_teacher.php', {
+      const res = await fetch(`${API_BASE}/admin/add_teacher.php`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -220,7 +221,7 @@ get_available_subjects.php
 
   const loadTeachers = async () => {
     try {
-      const res = await fetch('http://localhost/backend/api/admin/get_teachers.php');
+      const res = await fetch(`${API_BASE}/admin/get_teachers.php`);
       const data = await res.json();
       
       if (data.success) {

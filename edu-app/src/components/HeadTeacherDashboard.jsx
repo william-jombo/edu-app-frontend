@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API_BASE } from '../api';
  
 import TeacherManagement from './TeacherManagement';
 import StudentManagement from './StudentManagement';
@@ -22,7 +23,7 @@ function HeadTeacherDashboard({ user, onLogout, onNavigateToAdmin }) {
   // Load dashboard stats
   const loadStats = async () => {
     try {
-      const res = await fetch('http://localhost/backend/api/admin/get_stats.php');
+      const res = await fetch(`${API_BASE}/admin/get_stats.php`);
       const data = await res.json();
       if (data.success) {
         setStats(data.stats);
@@ -35,7 +36,7 @@ function HeadTeacherDashboard({ user, onLogout, onNavigateToAdmin }) {
   // Load teachers
   const loadTeachers = async () => {
     try {
-      const res = await fetch('http://localhost/backend/api/admin/get_teachers.php');
+      const res = await fetch(`${API_BASE}/admin/get_teachers.php`);
       const data = await res.json();
       if (data.success) {
         setTeachers(data.teachers);
@@ -48,7 +49,7 @@ function HeadTeacherDashboard({ user, onLogout, onNavigateToAdmin }) {
   // Load students
   const loadStudents = async () => {
     try {
-      const res = await fetch('http://localhost/backend/api/admin/get_students.php');
+      const res = await fetch(`${API_BASE}/admin/get_students.php`);
       const data = await res.json();
       if (data.success) {
         setStudents(data.students);
@@ -61,7 +62,7 @@ function HeadTeacherDashboard({ user, onLogout, onNavigateToAdmin }) {
   // Load classes
   const loadClasses = async () => {
     try {
-      const res = await fetch('http://localhost/backend/api/admin/get_classes.php');
+      const res = await fetch(`${API_BASE}/admin/get_classes.php`);
       const data = await res.json();
       if (data.success) {
         setClasses(data.classes);

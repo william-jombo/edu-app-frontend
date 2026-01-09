@@ -7,7 +7,7 @@ function TestAPI() {
   const testRegister = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost/backend/api/auth/register.php', {
+      const res = await fetch(`${API_BASE}/auth/register.php`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ function TestAPI() {
   const testLogin = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost/backend/api/auth/login.php', {
+      const res = await fetch(`${API_BASE}/auth/login.php`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

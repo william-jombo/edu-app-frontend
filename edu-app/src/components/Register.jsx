@@ -1,6 +1,7 @@
 
 
 import { useState, useEffect } from 'react';
+import { API_BASE } from '../api';
 
 function Register({ onRegisterSuccess, onSwitchToLogin }) {
   const [formData, setFormData] = useState({
@@ -26,8 +27,8 @@ function Register({ onRegisterSuccess, onSwitchToLogin }) {
   const loadFormData = async () => {
     try {
       const [subjectsRes, classesRes] = await Promise.all([
-        fetch('http://localhost/backend/api/common/get_available_subjects.php'),
-        fetch('http://localhost/backend/api/common/get_classes.php')
+        fetch(`${API_BASE}/common/get_available_subjects.php`),
+        fetch(`${API_BASE}/common/get_classes.php`)
       ]);
 
       const subjectsData = await subjectsRes.json();
@@ -81,7 +82,7 @@ function Register({ onRegisterSuccess, onSwitchToLogin }) {
     setLoading(true);
 
     try {
-      const res = await fetch('http://localhost/backend/api/common/register_student_with_subjects.php', {
+      const res = await fetch(`${API_BASE}/common/register_student_with_subjects.php`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

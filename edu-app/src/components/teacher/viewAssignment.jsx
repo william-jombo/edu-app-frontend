@@ -1,6 +1,7 @@
 
 
 import { useState, useEffect } from 'react';
+import { API_BASE, MEDIA_BASE } from '../../api';
 
 function ViewAssignments({ user, onLogout, onBack }) {
   const [teacherId, setTeacherId] = useState(null);
@@ -21,7 +22,7 @@ function ViewAssignments({ user, onLogout, onBack }) {
   useEffect(() => {
     const getTeacherId = async () => {
       try {
-        const response = await fetch(`http://localhost/backend/api/teachers/get_teacher_id.php?user_id=${user.id}`);
+        const response = await fetch(`${API_BASE}/teachers/get_teacher_id.php?user_id=${user.id}`);
         const data = await response.json();
         
         if (data.success && data.teacher_id) {
@@ -55,7 +56,7 @@ function ViewAssignments({ user, onLogout, onBack }) {
       setError(null);
       
       const response = await fetch(
-        `http://localhost/backend/api/teachers/get_submission_list.php?teacher_id=${teacherId}`
+        `${API_BASE}/teachers/get_submission_list.php?teacher_id=${teacherId}`
       );
       const data = await response.json();
       
@@ -75,7 +76,7 @@ function ViewAssignments({ user, onLogout, onBack }) {
     try {
       setLoading(true);
       const response = await fetch(
-        `http://localhost/backend/api/teachers/get_assignment_submissions.php?assignment_id=${assignmentId}`
+        `${API_BASE}/teachers/get_assignment_submissions.php?assignment_id=${assignmentId}`
       );
       const data = await response.json();
       
@@ -99,7 +100,7 @@ function ViewAssignments({ user, onLogout, onBack }) {
     }
 
     try {
-      const response = await fetch('http://localhost/backend/api/teachers/grade_submission.php', {
+      const response = await fetch(`${API_BASE}/teachers/grade_submission.php`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -372,7 +373,7 @@ function ViewAssignments({ user, onLogout, onBack }) {
                       <div className="mb-4">
                         <label className="block text-sm font-medium mb-2">Attached File:</label>
                         <a 
-                          href={`http://localhost/backend/${selectedSubmission.submission_file}`}
+                          href={`${MEDIA_BASE}/${selectedSubmission.submission_file}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-indigo-600 hover:underline flex items-center"

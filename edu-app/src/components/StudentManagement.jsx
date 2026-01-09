@@ -1,6 +1,7 @@
 
 
 import { useState, useEffect } from 'react';
+import { API_BASE } from '../api';
 import StudentTable from './StudentTable';
 import EditStudentModal from './EditStudentModal';
 
@@ -17,7 +18,7 @@ function StudentManagement({ onBack }) {
     setMessage('');
     try {
       // FIXED: Using correct endpoint and parameter name to match your PHP file
-      const res = await fetch(`http://localhost/backend/api/admin/get_students.php?form=Form ${formNumber}`);
+      const res = await fetch(`${API_BASE}/admin/get_students.php?form=Form ${formNumber}`);
       const data = await res.json();
       
       if (data.success) {
@@ -54,7 +55,7 @@ function StudentManagement({ onBack }) {
     if (!confirm('Are you sure you want to delete this student?')) return;
 
     try {
-      const res = await fetch('http://localhost/backend/api/admin/delete_student.php', {
+      const res = await fetch(`${API_BASE}/admin/delete_student.php`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ student_id: studentId })
@@ -83,7 +84,7 @@ function StudentManagement({ onBack }) {
   // Handle save edited student
   const handleSaveStudent = async (updatedStudent) => {
     try {
-      const res = await fetch('http://localhost/backend/api/admin/update_student.php', {
+      const res = await fetch(`${API_BASE}/admin/update_student.php`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedStudent)

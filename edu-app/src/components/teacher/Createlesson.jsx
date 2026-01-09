@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API_BASE, MEDIA_BASE } from '../../api';
 
 function CreateLesson({ user, onLogout, onBack }) {
   const [teacherId, setTeacherId] = useState(null);
@@ -36,7 +37,7 @@ function CreateLesson({ user, onLogout, onBack }) {
 
   const getTeacherId = async () => {
     try {
-      const response = await fetch(`http://localhost/backend/api/teachers/get_teacher_id.php?user_id=${user.id}`);
+      const response = await fetch(`${API_BASE}/teachers/get_teacher_id.php?user_id=${user.id}`);
       const data = await response.json();
       if (data.success && data.teacher_id) {
         setTeacherId(data.teacher_id);
@@ -50,8 +51,8 @@ function CreateLesson({ user, onLogout, onBack }) {
   const loadTeacherData = async () => {
     try {
       const [classesRes, subjectsRes] = await Promise.all([
-        fetch(`http://localhost/backend/api/teachers/classes.php?teacher_id=${teacherId}`),
-        fetch(`http://localhost/backend/api/teachers/subjects.php?teacher_id=${teacherId}`)
+        fetch(`${API_BASE}/teachers/classes.php?teacher_id=${teacherId}`),
+        fetch(`${API_BASE}/teachers/subjects.php?teacher_id=${teacherId}`)
       ]);
 
       const classesData = await classesRes.json();
@@ -67,7 +68,7 @@ function CreateLesson({ user, onLogout, onBack }) {
   const loadLessons = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost/backend/api/teachers/get_lessons.php?teacher_id=${teacherId}`);
+      const response = await fetch(`${API_BASE}/teachers/get_lessons.php?teacher_id=${teacherId}`);
       const data = await response.json();
       
       if (data.success) {
@@ -116,7 +117,7 @@ function CreateLesson({ user, onLogout, onBack }) {
         formData.append('lesson_file', uploadFile);
       }
 
-      const response = await fetch('http://localhost/backend/api/teachers/create_lesson.php', {
+      const response = await fetch(`${API_BASE}/teachers/create_lesson.php`, {
         method: 'POST',
         body: formData
       });
@@ -153,7 +154,7 @@ function CreateLesson({ user, onLogout, onBack }) {
     if (!window.confirm('Are you sure you want to delete this lesson?')) return;
 
     try {
-      const response = await fetch('http://localhost/backend/api/teachers/delete_lesson.php', {
+      const response = await fetch(`${API_BASE}/teachers/delete_lesson.php`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ lesson_id: lessonId, teacher_id: teacherId })
@@ -433,9 +434,9 @@ function CreateLesson({ user, onLogout, onBack }) {
                     </div>
 
                     <div className="flex space-x-2">
-                      {lesson.file_path && (
+                        {lesson.file_path && (
                         <a
-                          href={`http://localhost/backend/${lesson.file_path}`}
+                          href={`${MEDIA_BASE}/${lesson.file_path}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-blue-600 hover:text-blue-800 px-3 py-1 border border-blue-600 rounded"

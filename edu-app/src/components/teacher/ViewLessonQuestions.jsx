@@ -198,6 +198,7 @@
 
 
 import { useState, useEffect } from 'react';
+import { API_BASE } from '../../api';
 
 function ViewLessonQuestions({ user, onBack }) {
   const [questions, setQuestions] = useState([]);
@@ -213,7 +214,7 @@ function ViewLessonQuestions({ user, onBack }) {
         console.log('🔍 Fetching teacher_id for user_id:', user.id);
         
         const response = await fetch(
-          `http://localhost/backend/api/teachers/get_teacher_id.php?user_id=${user.id}`
+          `${API_BASE}/teachers/get_teacher_id.php?user_id=${user.id}`
         );
         const data = await response.json();
         
@@ -251,7 +252,7 @@ function ViewLessonQuestions({ user, onBack }) {
     try {
       setLoading(true);
       
-      const url = `http://localhost/backend/api/teachers/get_lesson_questions.php?teacher_id=${teacherId}`;
+      const url = `${API_BASE}/teachers/get_lesson_questions.php?teacher_id=${teacherId}`;
       console.log('📡 Fetching questions from:', url);
       
       const response = await fetch(url);
@@ -285,7 +286,7 @@ function ViewLessonQuestions({ user, onBack }) {
     try {
       console.log('📤 Posting answer for question:', questionId);
       
-      const response = await fetch('http://localhost/backend/api/teachers/answer_question.php', {
+      const response = await fetch(`${API_BASE}/teachers/answer_question.php`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

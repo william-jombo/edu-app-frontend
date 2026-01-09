@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { API_BASE } from './api';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -13,7 +14,7 @@ function LoginPage() {
     setLoading(true);
 
     try {
-      const res = await fetch('http://localhost/backend/api/auth/login.php', {
+      const res = await fetch(`${API_BASE}/auth/login.php`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

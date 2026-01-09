@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 
 
-const API_BASE_URL = 'http://localhost/backend/api/teachers';
+import { API_BASE } from '../api';
+const API_BASE_URL = `${API_BASE}/teachers`;
 
 function TeacherDashboard({ user, onLogout ,onNavigateToAssignments,onNavigateToLessons, onNavigateToQuestions  }) {
   const [activeTab, setActiveTab] = useState('overview');
@@ -27,7 +28,7 @@ function TeacherDashboard({ user, onLogout ,onNavigateToAssignments,onNavigateTo
 
   const getTeacherId = async () => {
     try {
-      const response = await fetch(`http://localhost/backend/api/teachers/get_teacher_id.php?user_id=${user.id}`);
+      const response = await fetch(`${API_BASE}/teachers/get_teacher_id.php?user_id=${user.id}`);
       const data = await response.json();
       
       if (data.success && data.teacher_id) {

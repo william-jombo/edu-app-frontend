@@ -1,8 +1,9 @@
 
 
 import { useState, useEffect } from 'react';
+import { API_BASE, MEDIA_BASE } from '../api';
 
-const API_BASE = 'http://localhost/backend/api/students';
+const STUDENTS_API = `${API_BASE}/students`;
 
 function StudentDashboard({ user, onLogout,onNavigateToLessons }) {
   const [activeTab, setActiveTab] = useState('overview');
@@ -33,7 +34,7 @@ function StudentDashboard({ user, onLogout,onNavigateToLessons }) {
 
   const getStudentId = async () => {
     try {
-      const response = await fetch(`${API_BASE}/get_student_id.php?user_id=${user.id}`);
+      const response = await fetch(`${STUDENTS_API}/get_student_id.php?user_id=${user.id}`);
       const data = await response.json();
       
       if (data.success && data.student_id) {
@@ -64,12 +65,12 @@ function StudentDashboard({ user, onLogout,onNavigateToLessons }) {
     try {
       setLoading(true);
       const [subjectsRes, assignmentsRes, gradesRes, attendanceRes, feesRes, statsRes] = await Promise.all([
-        fetch(`${API_BASE}/get_enrolled_subjects.php?student_id=${sId}`),
-        fetch(`${API_BASE}/get_assignments.php?student_id=${sId}`),
-        fetch(`${API_BASE}/get_grades.php?student_id=${sId}`),
-        fetch(`${API_BASE}/get_attendance.php?student_id=${sId}`),
-        fetch(`${API_BASE}/get_fees.php?student_id=${sId}`),
-        fetch(`${API_BASE}/get_stats.php?student_id=${sId}`)
+        fetch(`${STUDENTS_API}/get_enrolled_subjects.php?student_id=${sId}`),
+        fetch(`${STUDENTS_API}/get_assignments.php?student_id=${sId}`),
+        fetch(`${STUDENTS_API}/get_grades.php?student_id=${sId}`),
+        fetch(`${STUDENTS_API}/get_attendance.php?student_id=${sId}`),
+        fetch(`${STUDENTS_API}/get_fees.php?student_id=${sId}`),
+        fetch(`${STUDENTS_API}/get_stats.php?student_id=${sId}`)
       ]);
 
       const subjects = await subjectsRes.json();
@@ -104,7 +105,7 @@ function StudentDashboard({ user, onLogout,onNavigateToLessons }) {
   }
 
   try {
-    const response = await fetch('http://localhost/backend/api/students/unsubmit_assignment.php', {
+    const response = await fetch(`${STUDENTS_API}/unsubmit_assignment.php`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -155,7 +156,7 @@ function StudentDashboard({ user, onLogout,onNavigateToLessons }) {
         file: uploadFile.name
       });
 
-      const res = await fetch(`${API_BASE}/submit_assignment.php`, {
+      const res = await fetch(`${STUDENTS_API}/submit_assignment.php`, {
         method: 'POST',
         body: submitData
       });
@@ -189,7 +190,7 @@ function StudentDashboard({ user, onLogout,onNavigateToLessons }) {
     }
 
     try {
-      const res = await fetch(`${API_BASE}/submit_payment.php`, {
+      const res = await fetch(`${STUDENTS_API}/submit_payment.php`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -454,7 +455,7 @@ function StudentDashboard({ user, onLogout,onNavigateToLessons }) {
               <div className="flex gap-2">
                 {assignment.attachment_path && (
                   <a
-                    href={`http://localhost/backend/${assignment.attachment_path}`}
+                        href={`${MEDIA_BASE}/${assignment.attachment_path}`}
                     download={assignment.attachment_name}
                     target = '_BLANK_'
                     className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 text-sm"
@@ -478,7 +479,7 @@ function StudentDashboard({ user, onLogout,onNavigateToLessons }) {
 
                 {assignment.submission_file && (
                   <a
-                    href={`http://localhost/backend/${assignment.submission_file}`}
+                    href={`${MEDIA_BASE}/${assignment.submission_file}`}
                     download
                     target='_blank_'
                     className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 text-sm"

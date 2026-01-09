@@ -1,5 +1,6 @@
 
 import { useState } from 'react';
+import { API_BASE } from '../api';
 
 function Login({ onLoginSuccess, onSwitchToRegister }) {
   const [email, setEmail] = useState('');
@@ -17,7 +18,7 @@ function Login({ onLoginSuccess, onSwitchToRegister }) {
     setLoading(true);
 
     try {
-      const res = await fetch('http://localhost/backend/api/auth/login.php', {
+      const res = await fetch(`${API_BASE}/auth/login.php`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
