@@ -1,4 +1,4 @@
-
+//C:\Users\BR\Desktop\calmtech\frontend\edu-app-frontend\edu-app\src\components\Register.jsx
 
 import { useState, useEffect } from 'react';
 import { API_BASE } from '../api';

@@ -1,3 +1,6 @@
+
+//C:\Users\BR\Desktop\calmtech\frontend\edu-app-frontend\edu-app\vite.config.js
+
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 

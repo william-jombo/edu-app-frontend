@@ -109,7 +109,7 @@
 
 
 
-
+//C:\Users\BR\Desktop\calmtech\frontend\edu-app-frontend\edu-app\src\components\StudentTable.jsx
 
 function StudentTable({ students, formNumber, onEdit, onDelete }) {
   return (

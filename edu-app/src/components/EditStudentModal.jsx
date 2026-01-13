@@ -1,3 +1,5 @@
+//C:\Users\BR\Desktop\calmtech\frontend\edu-app-frontend\edu-app\src\components\EditStudentModal.jsx
+
 import { useState } from 'react';
 
 function EditStudentModal({ student, onSave, onClose }) {
