@@ -340,18 +340,11 @@
 
 
 
-
-
-
-
-
-
-
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL
-  ? `${import.meta.env.VITE_API_URL}/api`
-  : 'http://localhost:8000/api';
+// ✅ In production: requests go to /api (Vercel proxies to Fly.io)
+// ✅ In development: you can still use /api with Vite proxy (optional)
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
 console.log('API Base URL:', API_BASE_URL);
 
@@ -360,7 +353,7 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: false, // ✅ correct for JWT
+  withCredentials: false,
 });
 
 // Request interceptor
@@ -397,8 +390,5 @@ export const authAPI = {
 
 export default api;
 export { API_BASE_URL };
-// Backwards-compatible export used across the codebase
 export const API_BASE = API_BASE_URL;
-// Media base URL (for file/media links). Use explicit env var if provided,
-// otherwise derive from API_BASE_URL by removing a trailing `/api` segment.
-export const MEDIA_BASE = import.meta.env.VITE_MEDIA_BASE || API_BASE_URL.replace(/\/api\/?$/i, '');
+export const MEDIA_BASE = API_BASE_URL.replace(/\/api\/?$/i, '');

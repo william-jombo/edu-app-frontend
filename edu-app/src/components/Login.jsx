@@ -294,7 +294,7 @@ function Login({ onLoginSuccess, onSwitchToRegister }) {
         <div className="mt-8 pt-6 border-t border-gray-200">
           <p className="text-xs text-gray-500 text-center mb-2">Test Credentials:</p>
           <div className="text-xs text-gray-600 space-y-1">
-            <p className="text-center">Admin: admin@school.com / admin123</p>
+            <p className="text-center">Admin: admin@school.com / password</p>
           </div>
         </div>
       </div>

@@ -1,12 +1,8 @@
-
-
-
-
 {
   "rewrites": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "source": "/api/:path*",
+      "destination": "https://edu-app-backend.fly.dev/api/:path*"
     }
   ]
 }
