@@ -397,3 +397,8 @@ export const authAPI = {
 
 export default api;
 export { API_BASE_URL };
+// Backwards-compatible export used across the codebase
+export const API_BASE = API_BASE_URL;
+// Media base URL (for file/media links). Use explicit env var if provided,
+// otherwise derive from API_BASE_URL by removing a trailing `/api` segment.
+export const MEDIA_BASE = import.meta.env.VITE_MEDIA_BASE || API_BASE_URL.replace(/\/api\/?$/i, '');

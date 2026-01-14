@@ -1,7 +1,7 @@
 //C:\Users\BR\Desktop\calmtech\frontend\edu-app-frontend\edu-app\src\components\StudentManagement.jsx
 
 import { useState, useEffect } from 'react';
-import { API_BASE } from '../api';
+import api, { authAPI } from '../api';
 import StudentTable from './StudentTable';
 import EditStudentModal from './EditStudentModal';
 
@@ -17,9 +17,9 @@ function StudentManagement({ onBack }) {
     setLoading(true);
     setMessage('');
     try {
-      // FIXED: Using correct endpoint and parameter name to match your PHP file
-      const res = await fetch(`${API_BASE}/admin/get_students.php?form=Form ${formNumber}`);
-      const data = await res.json();
+      // Using axios instance from `src/api.js`
+      const res = await api.get('/admin/get_students.php', { params: { form: `Form ${formNumber}` } });
+      const data = res.data;
       
       if (data.success) {
         setStudents(data.students);
@@ -55,13 +55,8 @@ function StudentManagement({ onBack }) {
     if (!confirm('Are you sure you want to delete this student?')) return;
 
     try {
-      const res = await fetch(`${API_BASE}/admin/delete_student.php`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ student_id: studentId })
-      });
-
-      const data = await res.json();
+      const res = await api.post('/admin/delete_student.php', { student_id: studentId });
+      const data = res.data;
       
       if (data.success) {
         setMessage('Student deleted successfully!');
@@ -84,13 +79,8 @@ function StudentManagement({ onBack }) {
   // Handle save edited student
   const handleSaveStudent = async (updatedStudent) => {
     try {
-      const res = await fetch(`${API_BASE}/admin/update_student.php`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedStudent)
-      });
-
-      const data = await res.json();
+      const res = await api.post('/admin/update_student.php', updatedStudent);
+      const data = res.data;
       
       if (data.success) {
         setMessage('Student updated successfully!');

@@ -1,9 +1,9 @@
 //C:\Users\BR\Desktop\calmtech\frontend\edu-app-frontend\edu-app\src\components\StudentDashboard.jsx
 
 import { useState, useEffect } from 'react';
-import { API_BASE, MEDIA_BASE } from '../api';
+import { authAPI,  } from '../api';
 
-const STUDENTS_API = `${API_BASE}/students`;
+const STUDENTS_API = `${authAPI}/students`;
 
 function StudentDashboard({ user, onLogout,onNavigateToLessons }) {
   const [activeTab, setActiveTab] = useState('overview');

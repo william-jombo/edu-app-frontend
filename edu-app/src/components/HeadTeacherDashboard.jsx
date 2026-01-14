@@ -1,7 +1,7 @@
 //C:\Users\BR\Desktop\calmtech\frontend\edu-app-frontend\edu-app\src\components\HeadTeacherDashboard.jsx
 
 import { useState, useEffect } from 'react';
-import { API_BASE } from '../api';
+import { authAPI } from '../api';
  
 import TeacherManagement from './TeacherManagement';
 import StudentManagement from './StudentManagement';
